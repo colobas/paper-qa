@@ -491,6 +491,31 @@ def test_pdf_pypdf_reader():
     )
 
 
+def test_pdf_nougat_reader():
+    tests_dir = os.path.dirname(os.path.abspath(__file__))
+    doc_path = os.path.join(tests_dir, "paper.pdf")
+    splits1 = read_doc(
+        doc_path,
+        Doc(docname="foo", citation="Foo et al, 2002", dockey="1"),
+        force_nougat=True,
+        force_pypdf=False,
+        overlap=100,
+        chunk_chars=3000,
+    )
+    splits2 = read_doc(
+        doc_path,
+        Doc(docname="foo", citation="Foo et al, 2002", dockey="1"),
+        force_nougat=False,
+        force_pypdf=False,
+        overlap=100,
+        chunk_chars=3000,
+    )
+    assert (
+        strings_similarity(splits1[0].text.casefold(), splits2[0].text.casefold())
+        > 0.85
+    )
+
+
 def test_prompt_length():
     doc_path = "example.txt"
     with open(doc_path, "w", encoding="utf-8") as f:

@@ -26,6 +26,7 @@ setup(
         "html2text",
         "tiktoken>=0.4.0",
     ],
+    extras_require={"nougat": ["nougat-ocr"]},
     test_suite="tests",
     long_description=long_description,
     long_description_content_type="text/markdown",
